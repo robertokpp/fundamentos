@@ -13,7 +13,7 @@
 
     <style type="text/tailwindcss">
       @theme {
-        --text: #ebebeb;
+        --text: #EBEBEB;
         --text-secondary: #6b6b6b;
         --primary: #462878;
         --background: #2d2a37;
@@ -36,6 +36,7 @@
   <body class="text-(--text) font-(--font-sans)">
     <div id="root"></div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -48,12 +49,37 @@
         blast: "text-3xl",
       };
 
-      function Text({ as = "span", children, ...props }) {
-        return React.createElement(as, props, children);
+      function Text({
+        as = "span",
+        variant = "default",
+        className,
+        children,
+        ...props
+      }) {
+        return React.createElement(
+          as,
+          {
+            className: `${textVariants[variant]} ${className ? className : ""}`,
+            ...props,
+          },
+          children,
+        );
+      }
+
+      function Button({ children }) {
+        return (
+          <Text as="button" variant="heading">
+            {children}
+          </Text>
+        );
       }
 
       function App() {
-        return <main className="py-28 px-4">teste</main>;
+        return (
+          <main className="py-28 px-4">
+            <Button>CE</Button>
+          </main>
+        );
       }
 
       ReactDOM.createRoot(document.getElementById("root")).render(<App />);
